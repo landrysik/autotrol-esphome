@@ -32,6 +32,7 @@ And the second side (after removing 4 screws):
 1) Interfacing with the buttons is done by using small N-channel MOSFET transistor across the actual button. Buttons are NO with pullup to 3.6V. When pressed they short to GND. The MOSFET does the same when voltage from ESP8266 is applied to gate. I used breakout boards as the SO23 MOSFETs are too delicate for such purpose.
 2) Reading the motor status is tapped off at the TP 19 or R7. I placed small signal diode and 1.8k resistor in series. Additional pull down resistor (1.8M) is connected to mitigate the issue with essentialy floating input on ESP side. When the motor is turning, there is 3.3V going to the triac controlling the actual motor current.
 3) Water flow pulses are read from TP34. I again used small diode to mitigate any current flowing into the controller in case the ESP8266 misbehaving (during prototyping etc). Additional 1:1 resistor divider is implemented as the voltage signal is around 5.6V
+![Modified board](/images/modified_board.jpg)
 
 Here is a pin mapping into the ESP8266
 | Wemos D1 pin  | Autotrol Controller |
@@ -42,7 +43,7 @@ Here is a pin mapping into the ESP8266
 | D6  | Water flow pulse input  |
 | D7  | Motor input  |
 
-At the end I routed all the wires out of the case using the hole under the sticker. Presumably used for production programming.
+At the end I routed all the wires out of the case using the hole under the sticker (can be easily removed with few drops of isopropyl alcohol). Presumably used for production programming.
 The ESP8266 board is powered externally at the moment as I don'T have any suitable DC/DC converter at hand (all of this was a nice weekend project with components sourced from "the drawer"). Using existing power rail in the controller is not a great idea as the power path is not designed to handle any significant currents. The input 12V AC is half bridge rectified and simple wimpy LM317 in SO8 package linear stabilizer is used (maximum current 100mA). The ESP draws around 80mA so this will not be feasible.
 I want to place the ESP inside the controller casing together with 12VAC ->3.3V DC regulator as a permanent setup. 
 
