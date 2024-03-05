@@ -1,2 +1,15 @@
-# autotrol-esphome
+# Autotrol 760 water softener valve ESPhome integration
 "Hardware assisted" integration of Pentair Autotrol 760 water softener valve into Esphome and Home Assistant
+
+## Introduction
+Pentair Autotrol 760 is a controller used in water softeners/filters to govern softener regeneration based on amount of water used, hardness of the water, time of day and more. It features multiple cycles that run in sequence to do proper resin regneration (backwash, brine draw, rinse, downflow rinse, brine refill..)
+
+## Motivation
+1) I wanted to see my water consumption in Home Assistant dashboard and generate statistics based on this data. The Autotrol controller monitors the water usage (hall-effect sensor + turbine with magnet) to count how many liters remainis before another regeneration is needed. Unfortunatelly there is no way how to extract the data. And I didn't want to use another water meter in-line.
+2) In my opinion the regeneration process is wasting a lot of water in two steps: At the beginning there is a 10minute backwash at the rate of 8liters/minute. The backwash is needed to "fluff up" (expand) the softener resin beads and to wash any dirt to the drain. In my opinion the 10minutes is too long and causes around 80liters of water wasted. Unfortunatelly the time is fixed and can't be changed in this model.
+3) Another wasted water is during salt draw and subsequent slow rinse of the resin bed. Once the brine tank is empty, the salt valve is closed and the resin is slowly rinsed to flush the salt into drain. Those two steps take around 70minutes in my configuration, while roughly first 15minutes is needed for the salt draw and the rest is for the rinse. As I observed the regeneration cycle, the rinse was sufficiently completed after 35 minutes (yes I tasted the expelled water to see if there is still salt being washed out). Even with all the salt flushed away the cycle took another 35minutes - wasting another 50+ liters of water. The timing set by manufacturer is in my opinion "too conservative" and causes a LOT of water wasted over the lifetime of the product. I wated to rectify this. I tried different "resin amount" and "salt amount" settings to lower this time but it didn't work as expected. By setting lower resin volume or lower salt amount, the cycle time got shorter but this also caused significant lowering of the brine refill time - resulting in insufficient amount of water(brine) for the next regeneration and improper resin regeneration. 
+
+## Modification principle
+I decided to place ESP8266 microcontroller to emulate button presses of the Autotrol controller. If you press "square" + "button up" during regeneration, the controller advances to the next regeneration step. I exploited this and simulate button presses with the ESP8266 at the right times.
+I also read out the state of the motor that rotates the valve shaft to get the current cycle number. 
+As for water consumption I also tapped off the signal from hall-effect water turbine sensor and count pulses in ESPhome
