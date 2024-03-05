@@ -1,0 +1,185 @@
+esphome:
+  name: water-softener
+  friendly_name: water-softener
+
+esp8266:
+  board: d1_mini
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+
+wifi:
+  ssid: CHANGEME
+  password: CHANGEME
+
+
+
+
+
+
+output:
+  - platform: gpio
+    pin: D1
+    id: d1_out
+
+  - platform: gpio
+    pin: D2
+    id: d2_out
+
+
+  - platform: gpio
+    pin: D5
+    id: d5_out
+
+
+button:
+  - platform: output
+    name: "Button Square"
+    id: button_square
+    output: d1_out
+    duration: 300ms    
+
+
+  - platform: output
+    name: "Button UP"
+    id: button_up
+    output: d2_out
+    duration: 300ms       
+
+
+  - platform: output
+    name: "Button Regen Short"
+    id: button_regen
+    output: d5_out
+    duration: 300ms       
+
+# Have no need to force regeneration from dashboard at this time
+#  - platform: output
+#    name: "Button Regen START"
+#    output: d5_out
+#    duration: 4000ms       
+
+
+  - platform: template
+    name: "Advance Cycle"
+    id: button_advance_cycle
+    on_press:
+      then:
+        - button.press: button_square
+        - delay: 50ms
+        - button.press: button_up
+sensor:
+  - platform: pulse_counter
+    pin: D6
+    name: "Softened water flow"
+    device_class: water
+    unit_of_measurement: l/min
+    filters:
+      - multiply: 0.0625
+    update_interval: 10s
+    total:
+      name: 'Liters of softened water'
+      state_class: total_increasing
+      device_class: water
+      unit_of_measurement: L
+      filters: 
+        - multiply: 0.0625
+
+
+
+
+binary_sensor:
+  - platform: gpio
+    pin: D7
+    name: "Motor running"
+    device_class: running    
+    on_press:
+      then:
+        - number.increment:
+            id: cycle_number
+            cycle: false
+    on_release:
+      then:
+        - script.execute: cycle_number_reset
+
+number:
+  - platform: template
+    name: "Cycle number"
+    id: cycle_number
+    min_value: 0
+    max_value: 8
+    step: 1
+    optimistic: true 
+    mode: box
+
+    on_value:
+      then:
+        - if:
+            condition:
+              number.in_range:
+                id: cycle_number
+                above: 3
+                below: 3
+            then:
+              - logger.log: "NUMBER INCREMENTING"
+              - delay: 1s
+              - number.increment:
+                  id: cycle_number
+
+        - if:
+            condition:
+              and:
+                - number.in_range:
+                    id: cycle_number
+                    above: 1
+                    below: 1
+                - switch.is_on: backwash_speed_up
+            then:
+              - delay: 180s
+              - button.press: button_advance_cycle  
+              - logger.log: "Backwash DONE"              
+
+
+        - if:
+            condition:
+              and:
+                - number.in_range:
+                    id: cycle_number
+                    above: 2
+                    below: 2
+                - switch.is_on: salt_rinse_speed_up
+            then:
+              - logger.log: "Salt rinse advancing in 30 minutes...."
+              - delay: 30min
+              - button.press: button_advance_cycle  
+              - logger.log: "Salt Rinse DONE"              
+
+
+
+
+switch:
+  - platform: template
+    name: "Backwash speed-up"
+    id: backwash_speed_up
+    optimistic: true
+
+  - platform: template
+    name: "Salt Rinse speed-up"
+    id: salt_rinse_speed_up
+    optimistic: true
+
+
+script:
+  id: cycle_number_reset
+  mode: restart
+  then:
+    - delay: 2h
+    - number.set:
+        id: cycle_number
+        value: 0
