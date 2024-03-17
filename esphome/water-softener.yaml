@@ -62,7 +62,7 @@ button:
 # Have no need to force regeneration from dashboard at this time
 #  - platform: output
 #    name: "Button Regen START"
-#    output: d5_out
+#    output: d2_out
 #    duration: 4000ms       
 
 
