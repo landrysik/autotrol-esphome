@@ -38,8 +38,8 @@ Here is a pin mapping into the ESP8266
 | Wemos D1 pin  | Autotrol Controller |
 | ------------- | ------------- |
 | D1  | Square button  |
-| D2  | UP button  |
-| D5  | Regeneration button  |
+| D5  | UP button  |
+| D2  | Regeneration button  |
 | D6  | Water flow pulse input  |
 | D7  | Motor input  |
 
