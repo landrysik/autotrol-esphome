@@ -49,14 +49,14 @@ button:
   - platform: output
     name: "Button UP"
     id: button_up
-    output: d2_out
+    output: d5_out
     duration: 300ms       
 
 
   - platform: output
     name: "Button Regen Short"
     id: button_regen
-    output: d5_out
+    output: d2_out
     duration: 300ms       
 
 # Have no need to force regeneration from dashboard at this time
