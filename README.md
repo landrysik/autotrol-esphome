@@ -13,7 +13,8 @@ Pentair Autotrol 760 is a controller used in water softeners/filters to govern s
 ### Water savings! 
 By default in my configuration the softener used **250liters** of water for regeneration. After implementing this modification the amount of wated water was lowered to only **130liters** per regeneration and with more precise timing or TDS measurement it could be lowered even further!
 ### HA control and status
-![obrazek](https://github.com/landrysik/autotrol-esphome/assets/124715451/921221c0-1e11-47a2-ade2-1ac45a1047d7)
+![obrazek](https://github.com/landrysik/autotrol-esphome/assets/124715451/b231fd60-ea40-4672-8656-c3f1634ee1f9)
+
 ### Water usage stats!
 By feeding the water usage into HA energy dashboard, you can see your monthly/daily/hourly water consumption
 ![obrazek](https://github.com/landrysik/autotrol-esphome/assets/124715451/04147a56-2d27-4885-903a-5d40e062a00e)
