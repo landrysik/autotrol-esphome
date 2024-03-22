@@ -14,7 +14,7 @@ A quick description of operation principle of the code
 - After this step the controller is running autonomously as there is no need to interfere with following cycles. Additional backwash rinse + downflow rinse + brine draw look reasonably timed.
 > [!NOTE]
 > Those 40 minutes should be adjusted accordingly to the amount of resin, amount of salt used and water pressure with some reasonable extra time to be sure all of the salt is flushed.
-> In "extreme cases" additional water savings can be achieved by speeding up the next cycle (C5: Downflow Fast Rinse) which takes 4 minutes by default OR lowering the salt rinse timing. This fast rinse will flush andy remaining salt the same way (downflow) so there is maybe no need to flush 100% of the salt in slow salt rinse phase.
+> In "extreme cases" additional water savings can be achieved by speeding up the next cycle (C5: Downflow Fast Rinse) which takes 4 minutes by default OR lowering the salt rinse timing. This fast rinse will flush any remaining salt the same way (downflow) so there is maybe no need to flush 100% of the salt in slow salt rinse phase.
 > Just in case you are interested about the rest of the regeneration cycle, it follows with C6 (Upflow Backwash) at 1minute, C7 (Downflow Fast Rinse) at 1minute and finally it refills the salt tank at C8 which takes 9minutes in my setup (30 liters of resin)
 
 ## Future improvements: TDS meter
