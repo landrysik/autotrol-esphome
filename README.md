@@ -59,13 +59,29 @@ Using existing 3.3V power rail in the controller is not a great idea as the powe
 
 Using additional DC/DC or linear stabilizer is also not exactly ideal as I didn't want to load and sag those 17V with additional current as this voltage is used as power supply all through the unit as pull-up etc. And I am not sure how benevolent are those voltage margins...Also loading the transformer with only half-bridge rectified current is not so great either.
 
-There is another full bridge rectified voltage rail used for chlorine generator (not supported in my unit but all components are populated). It has different ground and is isolated from the rest of the circuit using optocouplers etc. I used this to power my ESP through isolated DC/DC converter. 
+There is another full bridge rectified voltage rail used for chlorine generator (not supported in my unit but all components are populated). It has different ground and is isolated from the rest of the circuit using optocouplers etc. I used this to power my ESP through isolated DC/DC converter (rectified voltage is available at the second capacitor and test pads around, see images). I used URB2403MT-3WR3 but you can use any ISOLATED DC/DC with REGULATED 3.3V output with enough current capability and around 15-20V input. Mine has pretty wide 9-36V input
 
 > [!WARNING]
 > The DC/DC must be isolated as the GND from half-bridge rectified voltage and full-bridge rectified voltage must NOT be connected together!
 
 
+## Re-Assembly
+I used silicone sealant (preferably neutral silicone) to fix all components in place. I don't like and don't advise using hot melt glue in long-term applications (although perfect for prototyping as temp. fix)! In my experince it does not work long-time and with thermal cycling gets deattached from surface
 
+> [!WARNING]
+> Paste tape to cover the gap between front case and LCD! Without doing so the silicone will squeeze between LCD and front panel and be ugly and visible!
+
+![Tape protection](/images/reassembly.jpg)
+
+Solder everything in place and then use silicone to set everything in place, let the silicone cure overnight...
+![Final state](/images/internals_all.jpg)
+![Power details](/images/power_detail.jpg)
+
+> [!WARNING]
+> Verify everything works fine before you glue the case back together! It is not easy to open and close after being glued shut...
+
+I used few drops of acetone to all 4 corners of the case to glue/weld back together. I assume superglue will work fine aswell...
+![Glue](/images/glue.jpg)
 
 ## ESPhome code + principle of operation
 For the ESPhome code + explained principle of operation see /esphome
