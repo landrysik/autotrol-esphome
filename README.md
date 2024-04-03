@@ -54,13 +54,18 @@ Here is a pin mapping into the ESP8266
 | D6  | Water flow pulse input  |
 | D7  | Motor input  |
 
-At the end I routed all the wires out of the case using the hole under the sticker (can be easily removed with few drops of isopropyl alcohol). Presumably used for production programming.
-The ESP8266 board is powered externally at the moment as I don'T have any suitable DC/DC converter at hand (all of this was a nice weekend project with components sourced from "the drawer"). Using existing power rail in the controller is not a great idea as the power path is not designed to handle any significant currents. The input 12V AC is half bridge rectified and simple wimpy LM317 in SO8 package linear stabilizer is used (maximum current 100mA). The ESP draws around 80mA so this will not be feasible.
-I want to place the ESP inside the controller casing together with 12VAC ->3.3V DC regulator as a permanent setup. 
+## Power supply
+Using existing 3.3V power rail in the controller is not a great idea as the power path is not designed to handle any significant currents. The input 12V AC is half bridge rectified to around 17V DC and simple wimpy LM317 in SO8 package linear stabilizer is used (maximum current 100mA). The ESP draws around 80mA so this will not be feasible.
+
+Using additional DC/DC or linear stabilizer is also not exactly ideal as I didn't want to load and sag those 17V with additional current as this voltage is used as power supply all through the unit as pull-up etc. And I am not sure how benevolent are those voltage margins...Also loading the transformer with only half-bridge rectified current is not so great either.
+
+There is another full bridge rectified voltage rail used for chlorine generator (not supported in my unit but all components are populated). It has different ground and is isolated from the rest of the circuit using optocouplers etc. I used this to power my ESP through isolated DC/DC converter. 
+
+> [!WARNING]
+> The DC/DC must be isolated as the GND from half-bridge rectified voltage and full-bridge rectified voltage must NOT be connected together!
 
 
 
-![Finished mod](/images/casing.jpg)
 
 ## ESPhome code + principle of operation
 For the ESPhome code + explained principle of operation see /esphome
