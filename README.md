@@ -29,7 +29,7 @@ As for water consumption I also tapped off the signal from hall-effect water tur
 > [!WARNING]
 > the disassembly is bit destructive as the casing is glued/ultrasonically welded. At the end you will need to glue it back together
 
-Use plastic prying tools + picks to slide between two parts of the plastic. Continue around the edge - you will need to use a bit of force to break the plastic welds
+Use plastic prying tools + picks to slide between two parts of the plastic. Continue around the edge - you will need to use a bit of force to break the plastic welds. Few drops of isopropyl alcohol seems to help with the separation.
 
 ![Prying the case open](/images/opening.jpg)
 
@@ -38,6 +38,7 @@ After you are in, you see the bare board.
 
 And the second side (after removing 4 screws):
 ![PCB side 2](/images/bare_board_2.jpg)
+Btw the square in the middle-top is supercap to keep RTC running and memory alive for few hours during power cut. After it gets discharged you must set clock again + you lose current "water remaining to next regeneration" as it is obviously stored in some volatile SRAM memory...
 
 ## Modification
 1) Interfacing with the buttons is done by using small N-channel MOSFET transistor across the actual button. Buttons are NO with pullup to 3.6V. When pressed they short to GND. The MOSFET does the same when voltage from ESP8266 is applied to gate. I used breakout boards as the SO23 MOSFETs are too delicate for such purpose.
